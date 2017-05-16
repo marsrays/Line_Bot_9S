@@ -1,0 +1,26 @@
+{
+  "name": "linebotwebhook",
+  "version": "1.0.0",
+  "description": "A demo for line bot webhook.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node .",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marsrays/Line_Bot.git"
+  },
+  "author": "marsrays",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/marsrays/Line_Bot/issues"
+  },
+  "homepage": "https://github.com/marsrays/Line_Bot#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "linebot": "^1.3.0",
+    "cheerio": "0.22.0",
+    "request": "2.81.0"
+  }
+}

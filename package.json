@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marsrays/Line_Bot.git"
+    "url": "git+https://github.com/marsrays/Line_Bot_9S.git"
   },
   "author": "marsrays",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/marsrays/Line_Bot/issues"
+    "url": "https://github.com/marsrays/Line_Bot_9S/issues"
   },
-  "homepage": "https://github.com/marsrays/Line_Bot#readme",
+  "homepage": "https://github.com/marsrays/Line_Bot_9S#readme",
   "dependencies": {
     "express": "^4.15.2",
     "linebot": "^1.3.0",

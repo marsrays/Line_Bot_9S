@@ -45,7 +45,10 @@ bot.on('follow', function (event) {
     event.source.profile().then(function (profile) {
         event.reply('您好 ' + profile.displayName + "，我是9S，很高興能為您服務");
     });
-    bot.push(event.source.userId, "我也可以主動通知提醒唷！")
+    setTimeout(function(){
+        bot.push(event.source.userId, "我也可以主動通知提醒唷！")
+    },3000);
+    
 });
 bot.on('join', function (event) {
     console.log("USER JOIN:", event.source.userId);
@@ -65,10 +68,10 @@ bot.on('message', function(event) {
                 msg = "造物主";
             } else {
                 setTimeout(function(){
-                    var sendMsg = event.message.text;
+                    var sendMsg = "無法辨識 " + event.message.text;
                     event.reply(sendMsg);
-                    console.log('send: '+sendMsg);
-                },2000);
+                    console.log('send: ' + sendMsg);
+                },1000);
             }
             break;
         default:

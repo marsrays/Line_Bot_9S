@@ -48,6 +48,8 @@ function parseDate(t, cfg) {
 remind.list = [];
 
 remind.add = function(timeString, userId, message) {
+    
+    console.log("remind add input: ", timeString, userId, message);
     /* 單純時間轉換 */
     var reg = new RegExp(/\d{2}:\d{2}/);
     if (reg.test(timeString)) {
@@ -62,7 +64,7 @@ remind.add = function(timeString, userId, message) {
         invalid: "error"
     });
 
-    console.log("remind add, ", date, message, userId, " now: ", new Date());
+    console.log("remind add result: ", date, " now: ", new Date());
     if (date > new Date()) {
         remind.list.push({userId : userId, date : date, message : message});
     }

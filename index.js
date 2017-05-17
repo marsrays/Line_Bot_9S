@@ -6,7 +6,12 @@ const app = express();
 var linebot = require('linebot');
 var server = require('http').Server(app);
 
+/* 關於2B */
 var about2B = require('./about2B');
+
+/* 提醒計時 */
+var remind = require('./remind');
+var remindIntervalHandler = undefined;
 
 // 取得LINE貼圖資訊
 function getStickerInfo(packageId, event) {
@@ -48,7 +53,7 @@ bot.on('follow', function (event) {
         event.reply('您好 ' + profile.displayName + "，我是9S，很高興能為您服務");
     });
     setTimeout(function(){
-        bot.push(event.source.userId, "我也可以主動通知提醒唷！")
+        bot.push(event.source.userId, "我也可以主動通知提醒唷！");
     },3000);
     
 });
@@ -70,6 +75,26 @@ bot.on('message', function(event) {
                 msg = "造物主";
             } else if (event.message.text.includes("2B") || event.message.text.includes("2b")) {
                 msg = about2B.thinkAbout(event.message.text);
+            } else if (event.message.text.includes("提醒")) {
+                var fmt = event.message.text.split(",");
+                if (3 === fmt.length && "error" !== remind.add(fmt[1], event.source.userId, fmt[2])) {
+                    msg = "已幫您設定好提醒了";
+                    if ("undefined" === typeof remindIntervalHandler) {
+                        remindIntervalHandler = setInterval(function(){
+                            var result = remind.check();
+                            if ("empty" === result) {
+                                clearInterval(remindIntervalHandler);
+                                remindIntervalHandler = undefined;
+                            } else if (0 < result.length) {
+                                result.forEach(function(i){
+                                    bot.push(i.userId, i.message);
+                                });
+                            }
+                        }, 30000);
+                    }
+                } else {
+                    msg = "正確格式為 '{提醒},{YYYY-MM-DD HH:mm},{提醒語}' 當天時間可以省略成 '{提醒},{HH:mm},{提醒語}' 注意：無法設定到秒";
+                }
             } else {
                 setTimeout(function(){
                     var sendMsg = "無法辨識 " + event.message.text;
@@ -95,7 +120,9 @@ bot.on('message', function(event) {
 
 });
 
+
 server.listen(process.env.PORT || 8080, function() {
     var port = server.address().port;
     console.log("App now runing on port", port);
 });
+

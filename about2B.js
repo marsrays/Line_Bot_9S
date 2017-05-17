@@ -17,12 +17,12 @@ _2B.emotion[2] = "面對她時感到害羞";
 
 /* 資訊 */
 var _data = ["情報", "資訊", "知道"];
-_2B.data = {};
+_2B.data = [];
 _2B.data[0] = "寄葉二號B型";
 _2B.data[1] = "真實身分為「寄葉2號E型」";
-_2B.data[2] = "無數次殺害9S";
-_2B.data[3] = "處決擁有高度視察能力的S型人型而創造出來的";
-_2B.data[4] = "被A2殺死了！";
+_2B.data[2] = "過去曾無數次殺死我...";
+_2B.data[3] = "為了處決擁有高度視察能力的S型人型而創造出來的";
+_2B.data[4] = "最後被A2殺死了！";
 
 _2B.thinkAbout = function(words) {
 
@@ -47,7 +47,7 @@ _2B.thinkAbout = function(words) {
 
     var isData = false;
     var dataRandom = Math.floor(Math.random()*_2B.data.length);
-    _data.forEach(function(i){ isData = isData || words.includes(i); });
+    _data.forEach(function(i){ isData = isData || words.includes(i) });
     if (isData) {
         return _2B.data[dataRandom];
     }

@@ -49,9 +49,8 @@ remind.list = [];
 
 remind.add = function(timeString, userId, message) {
     
-    console.log("remind add input: ", timeString, userId, message);
     /* 單純時間轉換 */
-    var reg = new RegExp(/\d{2}:\d{2}/);
+    var reg = new RegExp(/^\d{2}:\d{2}$/);
     if (reg.test(timeString)) {
         var now = new Date();
         var year = now.getFullYear();
@@ -67,13 +66,14 @@ remind.add = function(timeString, userId, message) {
     console.log("remind add result: ", date, " now: ", new Date());
     if (date > new Date()) {
         remind.list.push({userId : userId, date : date, message : message});
+    } else {
+        date = "pass";
     }
 
     return date;
 };
 
 remind.check = function() {
-    console.log("remind check", remind.list.length);
     /* 挑出時間到的 */
     var timeUpList = [];
     remind.list.forEach(function(i) {
@@ -93,6 +93,7 @@ remind.check = function() {
 
     if (0 === timeUpList.length && 0 === remind.list.length) {
         timeUpList = "empty";
+        console.log("There is no any note in remind list.");
     }
 
     return timeUpList;

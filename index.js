@@ -78,23 +78,28 @@ bot.on('message', function(event) {
                 msg = about2B.thinkAbout(event.message.text);
             } else if (event.message.text.includes("提醒")) {
                 var fmt = event.message.text.split(",");
-                if (3 === fmt.length && "error" !== remind.add(fmt[1], event.source.userId, fmt[2])) {
-                    msg = "已幫您設定好提醒了";
-                    if ("undefined" === typeof remindIntervalHandler) {
-                        remindIntervalHandler = setInterval(function(){
-                            var result = remind.check();
-                            if ("empty" === result) {
-                                clearInterval(remindIntervalHandler);
-                                remindIntervalHandler = undefined;
-                            } else if (0 < result.length) {
-                                result.forEach(function(i){
-                                    bot.push(i.userId, i.message);
-                                });
-                            }
-                        }, 30000);
+                msg = "正確格式為 '{提醒},{YYYY-MM-DD HH:mm},{提醒語}' 當天時間可以省略成 '{提醒},{HH:mm},{提醒語}' 注意：無法設定到秒";
+                if (3 === fmt.length ) {
+                    var result = remind.add(fmt[1], event.source.userId, fmt[2]);
+                    if ("error" === result) {
+                    } else if ("pass" === result) {
+                        msg = "欲提醒時間已過，無法設定"
+                    } else {
+                        msg = "已幫您設定好提醒了";
+                        if ("undefined" === typeof remindIntervalHandler) {
+                            remindIntervalHandler = setInterval(function(){
+                                var result = remind.check();
+                                if ("empty" === result) {
+                                    clearInterval(remindIntervalHandler);
+                                    remindIntervalHandler = undefined;
+                                } else if (0 < result.length) {
+                                    result.forEach(function(i){
+                                        bot.push(i.userId, i.message);
+                                    });
+                                }
+                            }, 30000);
+                        }
                     }
-                } else {
-                    msg = "正確格式為 '{提醒},{YYYY-MM-DD HH:mm},{提醒語}' 當天時間可以省略成 '{提醒},{HH:mm},{提醒語}' 注意：無法設定到秒";
                 }
             } else {
                 setTimeout(function(){

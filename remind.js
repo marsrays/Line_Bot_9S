@@ -62,8 +62,8 @@ remind.add = function(timeString, userId, message) {
         invalid: "error"
     });
 
+    console.log("remind add, ", date, message, userId, " now: ", new Date());
     if (date > new Date()) {
-        console.log("remind add success, ", date, message, userId);
         remind.list.push({userId : userId, date : date, message : message});
     }
 

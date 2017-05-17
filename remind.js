@@ -75,6 +75,7 @@ remind.check = function() {
     /* 挑出時間到的 */
     var timeUpList = [];
     remind.list.forEach(function(i) {
+        console.log(i.date, " vs ", new Date());
         if (i.date  < new Date()) {
             timeUpList.push(i);
         }

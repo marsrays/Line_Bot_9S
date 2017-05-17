@@ -13,6 +13,18 @@ var about2B = require('./about2B');
 var remind = require('./remind');
 var remindIntervalHandler = undefined;
 
+//載入MySQL模組
+var mysql = require('mysql');
+//建立連線
+var connection = mysql.createConnection({
+    host: '85.10.205.173',
+    user: 'yorha9s',
+    password: '123qwe',
+    database: 'linebot9s'
+});
+//開始連接
+connection.connect();
+
 // 取得LINE貼圖資訊
 function getStickerInfo(packageId, event) {
     console.log("getStickerInfo", packageId, event);
@@ -85,6 +97,10 @@ bot.on('message', function(event) {
                     } else if ("pass" === result) {
                         msg = "欲提醒時間已過，無法設定"
                     } else {
+                        connection.query("INSERT INTO RemindList (timeString, userId, message) VALUES ('"+fmt[1]+"', '"+event.source.userId+"', '"+fmt[2]+"');", function (error) {
+                            if (error) console.log("Error : ", error);
+                            console.log('INSERT INTO RemindList Done');
+                        });
                         msg = "已幫您設定好提醒了";
                         if ("undefined" === typeof remindIntervalHandler) {
                             remindIntervalHandler = setInterval(function(){
@@ -126,9 +142,13 @@ bot.on('message', function(event) {
 
 });
 
+process.on('exit', function() {
+    console.log("App shutdown now");
+    connection.end();
+});
+
 
 server.listen(process.env.PORT || 8080, function() {
     var port = server.address().port;
     console.log("App now runing on port", port);
 });
-

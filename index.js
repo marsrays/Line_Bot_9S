@@ -46,6 +46,22 @@ function getStickerInfo(packageId, event) {
         console.log(titleName);
         REPLY(titleName);
     });
+};
+
+function runRemindInterval() {
+    if ("undefined" === typeof remindIntervalHandler) {
+        remindIntervalHandler = setInterval(function(){
+            var result = remind.check();
+            if ("empty" === result) {
+                clearInterval(remindIntervalHandler);
+                remindIntervalHandler = undefined;
+            } else if (0 < result.length) {
+                result.forEach(function(i){
+                    bot.push(i.userId, i.message);
+                });
+            }
+        }, 30000);
+    }
 }
 
 var bot = linebot({
@@ -102,19 +118,7 @@ bot.on('message', function(event) {
                             console.log('INSERT INTO RemindList Done');
                         });
                         msg = "已幫您設定好提醒了";
-                        if ("undefined" === typeof remindIntervalHandler) {
-                            remindIntervalHandler = setInterval(function(){
-                                var result = remind.check();
-                                if ("empty" === result) {
-                                    clearInterval(remindIntervalHandler);
-                                    remindIntervalHandler = undefined;
-                                } else if (0 < result.length) {
-                                    result.forEach(function(i){
-                                        bot.push(i.userId, i.message);
-                                    });
-                                }
-                            }, 30000);
-                        }
+                        runRemindInterval();
                     }
                 }
             } else {
@@ -151,4 +155,19 @@ process.on('exit', function() {
 server.listen(process.env.PORT || 8080, function() {
     var port = server.address().port;
     console.log("App now runing on port", port);
+
+    /* Get data from DB to AP chche */
+    connection.query("SELECT * FROM RemindList;", function (error, result) {
+        if (error) console.log("Error : ", error);
+        console.log('SELECT RemindList Done', result.length);
+        result.forEach(function(i) {
+            var addResult = remind.add(i.timeString, i.userId, i.message);
+            if ("error" === addResult || "pass" === addResult) {
+                connection.query("DELETE FROM RemindList WHERE id = "+i.id+";", function (error, result) {
+                    console.log('DELETE RemindList Done');
+                });
+            }
+        });
+        runRemindInterval();
+    });
 });

@@ -71,6 +71,7 @@ bot.on('message', function(event) {
             getStickerInfo(event.message.packageId, event);
             break;
         case "text":
+            console.log(event.message.text);
             if ("RAY" === event.message.text.toUpperCase()) {
                 msg = "造物主";
             } else if (event.message.text.includes("2B") || event.message.text.includes("2b")) {

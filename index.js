@@ -6,6 +6,8 @@ const app = express();
 var linebot = require('linebot');
 var server = require('http').Server(app);
 
+var about2B = require('./about2B');
+
 // 取得LINE貼圖資訊
 function getStickerInfo(packageId, event) {
     console.log("getStickerInfo", packageId, event);
@@ -66,6 +68,8 @@ bot.on('message', function(event) {
         case "text":
             if ("RAY" === event.message.text.toUpperCase()) {
                 msg = "造物主";
+            } else if (event.message.text.includes("2B") || event.message.text.includes("2b")) {
+                msg = about2B.thinkAbout(event.message.text);
             } else {
                 setTimeout(function(){
                     var sendMsg = "無法辨識 " + event.message.text;

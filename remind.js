@@ -63,8 +63,9 @@ remind.add = function(timeString, userId, message) {
         invalid: "error"
     });
 
-    console.log("remind add result: ", date, " now: ", new Date());
     if (date > new Date()) {
+        date.setHours(date.getHours() -8);  // 臺灣時間換算
+        console.log("remind add result: ", date, " now: ", new Date());
         remind.list.push({userId : userId, date : date, message : message});
     } else {
         date = "pass";

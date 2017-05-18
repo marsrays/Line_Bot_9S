@@ -54,7 +54,7 @@ function getTextSearch(event) {
     searchWords = searchWords.replace(/ /g,"+");
     console.log("getTextSearch", searchWords, event);
     const REPLY = event.reply;
-    const URL = "https://www.google.com.tw/search?q="+searchWords;
+    const URL = "https://www.google.com.tw/search?q="+searchWords+"&oq="+searchWords+"&sourceid=chrome&ie=UTF-8";
     console.log(URL);
     request({
         url: URL,

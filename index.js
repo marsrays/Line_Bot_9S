@@ -48,6 +48,33 @@ function getStickerInfo(packageId, event) {
     });
 };
 
+function getTextSearch(event) {
+    var searchWords = event.message.text.replace(/\n/g," ");
+    searchWords = searchWords.replace(/ /g,"+");
+    console.log("getTextSearch", searchWords, event);
+    const REPLY = event.reply;
+    request({
+        url: "https://www.google.com.tw/search?q="+searchWords,
+        method: "GET",
+        headers: {
+            "Accept-Language": "zh-TW"
+        }
+    }, function(e,r,b) { /* Callback 函式 */
+        /* e: 錯誤代碼 */
+        /* b: 傳回的資料內容 */
+        if(e || !b) { return; }
+
+        var $ = cheerio.load(b);
+        var scripts = $("#ires h3>a");
+        var searchResult = [];
+        scripts.forEach(function(i) {
+            searchResult.push($(i).text());
+        });
+
+        REPLY(searchResult.join("\n"));
+    });
+}
+
 function runRemindInterval() {
     if ("undefined" === typeof remindIntervalHandler) {
         remindIntervalHandler = setInterval(function(){
@@ -122,11 +149,7 @@ bot.on('message', function(event) {
                     }
                 }
             } else {
-                setTimeout(function(){
-                    var sendMsg = "無法辨識 " + event.message.text;
-                    event.reply(sendMsg);
-                    console.log('send: ' + sendMsg);
-                },1000);
+                getTextSearch(event);
             }
             break;
         default:

@@ -33,7 +33,8 @@ function getStickerInfo(packageId, event) {
         url: "https://store.line.me/stickershop/product/"+packageId,
         method: "GET",
         headers: {
-            "Accept-Language": "zh-TW"
+            "Accept-Language": "zh-TW",
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
         }
     }, function(e,r,b) { /* Callback 函式 */
         /* e: 錯誤代碼 */
@@ -57,7 +58,8 @@ function getTextSearch(event) {
         url: "https://www.google.com.tw/search?q="+searchWords,
         method: "GET",
         headers: {
-            "Accept-Language": "zh-TW"
+            "Accept-Language": "zh-TW",
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.65 Safari/537.36'
         }
     }, function(e,r,b) { /* Callback 函式 */
         /* e: 錯誤代碼 */

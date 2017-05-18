@@ -54,8 +54,10 @@ function getTextSearch(event) {
     searchWords = searchWords.replace(/ /g,"+");
     console.log("getTextSearch", searchWords, event);
     const REPLY = event.reply;
+    const URL = "https://www.google.com.tw/search?q="+searchWords;
+    console.log(URL);
     request({
-        url: "https://www.google.com.tw/search?q="+searchWords,
+        url: URL,
         method: "GET",
         headers: {
             "Accept-Language": "zh-TW",

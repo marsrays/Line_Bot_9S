@@ -64,8 +64,7 @@ remind.add = function(timeString, userId, message) {
     });
     
     if ("object" === typeof date) {
-        console.log("TimezoneOffset", date.getTimezoneOffset());
-        date.setHours(date.getHours() -8);  // 臺灣時間換算
+        date.setHours(date.getHours() + (date.getTimezoneOffset()-480)/60);  // 臺灣時間換算
     }
 
     if (date > new Date()) {

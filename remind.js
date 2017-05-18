@@ -62,9 +62,13 @@ remind.add = function(timeString, userId, message) {
     var date = parseDate(timeString, {
         invalid: "error"
     });
+    
+    if ("object" === typeof date) {
+        console.log("TimezoneOffset", date.getTimezoneOffset());
+        date.setHours(date.getHours() -8);  // 臺灣時間換算
+    }
 
     if (date > new Date()) {
-        date.setHours(date.getHours() -8);  // 臺灣時間換算
         console.log("remind add result: ", date, " now: ", new Date());
         remind.list.push({userId : userId, date : date, message : message});
     } else {

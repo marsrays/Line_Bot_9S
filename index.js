@@ -168,6 +168,8 @@ server.listen(process.env.PORT || 8080, function() {
                 });
             }
         });
-        runRemindInterval();
+        if (0 < result.length) {
+            runRemindInterval();
+        }
     });
 });

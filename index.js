@@ -67,8 +67,8 @@ function getTextSearch(event) {
         var $ = cheerio.load(b);
         var scripts = $("#ires h3>a");
         var searchResult = [];
-        scripts.forEach(function(i) {
-            searchResult.push($(i).text());
+        scripts.map(function(i,o) {
+            searchResult.push($(o).text());
         });
 
         REPLY(searchResult.join("\n"));

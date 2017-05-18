@@ -69,7 +69,7 @@ function getTextSearch(event) {
         if(e || !b) { return; }
 
         var $ = cheerio.load(b);
-        var scripts = $("#ires h3>a");
+        var scripts = $("#ires span.st");
         var searchResult = [];
         scripts.map(function(i,o) {
             searchResult.push($(o).text());

@@ -74,7 +74,7 @@ function getTextSearch(event) {
             searchResult.push($(o).text());
         });
 
-        REPLY(searchResult.join("\n"));
+        REPLY(searchResult.join("\n\n"));
     });
 }
 

@@ -50,8 +50,7 @@ function getStickerInfo(packageId, event) {
 };
 
 function getTextSearch(event) {
-    var searchWords = event.message.text.replace(/\n/g," ");
-    searchWords = searchWords.replace(/ /g,"+");
+    var searchWords = encodeURI(event.message.text.replace(/\n/g," ").replace(/ /g,"+"));
     console.log("getTextSearch", searchWords, event);
     const REPLY = event.reply;
     const URL = "https://www.google.com.tw/search?q="+searchWords+"&oq="+searchWords+"&sourceid=chrome&ie=UTF-8";

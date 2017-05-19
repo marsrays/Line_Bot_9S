@@ -71,7 +71,9 @@ function getTextSearch(event) {
         var scripts = $("#ires span.st");
         var searchResult = [];
         scripts.map(function(i,o) {
-            searchResult.push($(o).text());
+            if (5 > i) {
+                searchResult.push($(o).text());
+            }
         });
 
         REPLY(searchResult.join("\n\n"));

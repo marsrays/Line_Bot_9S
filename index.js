@@ -137,7 +137,7 @@ bot.on('message', function(event) {
             } else if (event.message.text.includes("2B") || event.message.text.includes("2b")) {
                 msg = about2B.thinkAbout(event.message.text);
             } else if (event.message.text.includes("提醒")) {
-                var fmt = event.message.text.split(",");
+                var fmt = event.message.text.includes("，") ? event.message.text.split("，") : event.message.text.split(",");
                 msg = "正確格式為 '{提醒},{YYYY-MM-DD HH:mm},{提醒語}'\n當天時間可以省略成 '{提醒},{HH:mm},{提醒語}'\n注意：無法設定到秒";
                 if (3 === fmt.length ) {
                     var result = remind.add(fmt[1], event.source.userId, fmt[2]);

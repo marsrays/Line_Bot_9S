@@ -19,7 +19,7 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
     host: '85.10.205.173',
     user: 'yorha9s',
-    password: '123qwe',
+    password: '1qaz2wsx',
     database: 'linebot9s'
 });
 //開始連接

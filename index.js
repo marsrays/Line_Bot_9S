@@ -146,7 +146,7 @@ bot.on('message', function(event) {
                         msg = "欲提醒時間已過，無法設定"
                     } else {
 						var queryString = "INSERT INTO RemindList (timeString, userId, message) VALUES ('"+fmt[1]+"', '"+event.source.userId+"', '"+fmt[2]+"');";
-						console.log("query string :", queryString);
+						console.log("'query string' :", queryString);
                         connection.query(queryString, function (error) {
                             if (error) console.log("Error : ", error);
                             console.log('INSERT INTO RemindList Done');
